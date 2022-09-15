@@ -29,3 +29,18 @@ Menu > Xcode > Preferences > Select Components, and then choose the simulator ve
 4. In the Visual studio terminal type: flutter pub get && flutter run
 5. Wait for the app to run, first run will take few minutes
 6. You should now have the app running on iOS
+
+![image](https://user-images.githubusercontent.com/86359268/190518262-b79913b9-80a3-4255-a6a4-882c1d3d49f6.png)
+
+![image](https://user-images.githubusercontent.com/86359268/190518289-0c9d9641-f23f-45c8-bde6-c59431e73a4d.png)
+
+![image](https://user-images.githubusercontent.com/86359268/190518335-4b89070b-464e-44e9-8296-7fe6f6f17af1.png)
+
+![image](https://user-images.githubusercontent.com/86359268/190518360-b52a31ef-3993-4281-af9b-0f13cd3cfa2a.png)
+
+![image](https://user-images.githubusercontent.com/86359268/190518385-99e039c9-d6ae-46d1-94a9-369b97af6486.png)
+
+![image](https://user-images.githubusercontent.com/86359268/190518403-6926dd72-b83f-414d-85bc-88e7e51f8d39.png)
+
+![image](https://user-images.githubusercontent.com/86359268/190518437-fdfb3a1e-8611-44aa-b1f5-c09cb981dc08.png)
+
