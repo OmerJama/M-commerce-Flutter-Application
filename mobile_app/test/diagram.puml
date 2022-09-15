@@ -1,0 +1,500 @@
+@startuml
+allowmixing
+set namespaceSeparator ::
+
+class "mobile_app::firebase_options.dart::DefaultFirebaseOptions" {
+  {static} +FirebaseOptions web
+  {static} +FirebaseOptions android
+  {static} +FirebaseOptions ios
+  {static} +FirebaseOptions macos
+  {static} +FirebaseOptions currentPlatform
+}
+
+"mobile_app::firebase_options.dart::DefaultFirebaseOptions" o-- "firebase_core_platform_interface::firebase_core_platform_interface.dart::FirebaseOptions"
+
+class "mobile_app::main.dart::MyApp" {
+  +Widget build()
+}
+
+
+class "mobile_app::models::category_model.dart::Category" {
+  +String name
+  +String? optionalId
+  +String imageUrl
+  +Map<String, dynamic> toMap()
+}
+
+class "mobile_app::models::faq_model.dart::FaqModel" {
+  +String question
+  +String answer
+  +Map<String, dynamic> toMap()
+}
+
+class "mobile_app::models::order_model.dart::Order" {
+  +String name
+  +Timestamp timestamp
+  +List<CartItemModel> product
+  +String userid
+  +String optionalid
+  +String address
+  +String cancelled
+}
+
+"mobile_app::models::order_model.dart::Order" o-- "cloud_firestore_platform_interface::src::timestamp.dart::Timestamp"
+
+class "mobile_app::models::product_model.dart::Product" {
+  +String name
+  +String description
+  +double price
+  +String imageUrl
+  +String? optionalId
+  +String category
+  +String sizes
+  +int smallStock
+  +int mediumStock
+  +int largeStock
+  +int xLargeStock
+  +int stock
+  +List<String> searchArray
+  +Map<String, dynamic> toMap()
+}
+
+class "mobile_app::models::user_model.dart::UserModel" {
+  +String? uid
+  +String? firstName
+  +String? secondName
+  +String? email
+  +Map<String, dynamic> toMap()
+}
+
+class "mobile_app::models::wishlist_model.dart::Wishlist" {
+  +String name
+  +String description
+  +double price
+  +String imageUrl
+  +String? optionalId
+  +String size
+  +String uid
+  +Map<String, dynamic> toMap()
+}
+
+class "mobile_app::services::firestore_service.dart::FirestoreService" {
+  +String userId
+  +FirebaseFirestore firestore
+  +Future<void> addUser()
+  +dynamic addCategory()
+  +Stream<List<Category>> getCategory()
+  +Future<void> addProduct()
+  +Stream<List<Product>> getProducts()
+  +Future<int> countDocuments()
+  +Future<int> countCategoryDocuments()
+  +Future<void> addToWishlist()
+  +Stream<List<Wishlist>> getWishlist()
+  +Future<void> addToCart()
+  +Stream<List<Order>> getOrders()
+  +Future<void> addFaq()
+  +Stream<List<Order>> getAllOrders()
+  +Stream<List<Order>> getShippedOrders()
+  +Stream<List<Order>> getDeliveredOrders()
+  +Stream<List<Order>> getAllShippedUserOrders()
+  +Stream<List<Order>> getAllDeliveredUserOrders()
+  +Stream<List<Order>> getAllCancelledUserOrders()
+  +Stream<List<Order>> getAllCancelledOrders()
+}
+
+"mobile_app::services::firestore_service.dart::FirestoreService" o-- "cloud_firestore::cloud_firestore.dart::FirebaseFirestore"
+
+class "mobile_app::services::order_service.dart::OrderService" {
+  +dynamic createOrder()
+  +Stream<List<Order>> getOrders()
+}
+
+class "mobile_app::services::payment_service.dart::PaymentHandler" {
+  +String? payIntentId
+  +bool isError
+  +String message
+}
+
+class "mobile_app::services::payment_service.dart::PaymentService" {
+  +Future<PaymentHandler> initPaymentSheet()
+}
+
+class "mobile_app::services::storage_service.dart::StorageService" {
+  +String uid
+  +FirebaseStorage storage
+  +Future<String> uploadFile()
+}
+
+"mobile_app::services::storage_service.dart::StorageService" o-- "firebase_storage::firebase_storage.dart::FirebaseStorage"
+
+class "mobile_app::view::ui::screens::admin::add_category_screen.dart::AddCategoryScreen" {
+  +ConsumerState<AddCategoryScreen> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::admin::add_category_screen.dart::AddCategoryScreen"
+
+class "mobile_app::view::ui::screens::admin::add_product_screen.dart::AddProductScreen" {
+  +ConsumerState<AddProductScreen> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::admin::add_product_screen.dart::AddProductScreen"
+
+class "mobile_app::view::ui::screens::admin::admin_addfaq.dart::AddFaqScreen" {
+  +ConsumerState<AddFaqScreen> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::admin::admin_addfaq.dart::AddFaqScreen"
+
+class "mobile_app::view::ui::screens::admin::admin_display_orders.dart::AdminDisplayOrders" {
+  +State<AdminDisplayOrders> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mobile_app::view::ui::screens::admin::admin_display_orders.dart::AdminDisplayOrders"
+
+class "mobile_app::view::ui::screens::admin::admin_faq_edit.dart::EditFaqScreen" {
+  +ConsumerState<EditFaqScreen> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::admin::admin_faq_edit.dart::EditFaqScreen"
+
+class "mobile_app::view::ui::screens::admin::admin_guide_screen.dart::AdminGuide" {
+  +State<AdminGuide> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mobile_app::view::ui::screens::admin::admin_guide_screen.dart::AdminGuide"
+
+class "mobile_app::view::ui::screens::admin::admin_home_screen.dart::AdminHome" {
+  +ConsumerState<AdminHome> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::admin::admin_home_screen.dart::AdminHome"
+
+class "mobile_app::view::ui::screens::admin::admin_home_screen.dart::Pages" {
+  +int index
+  {static} +List<Pages> values
+  {static} +Pages home
+  {static} +Pages manage
+}
+
+"mobile_app::view::ui::screens::admin::admin_home_screen.dart::Pages" o-- "mobile_app::view::ui::screens::admin::admin_home_screen.dart::Pages"
+"dart::core::Enum" <|-- "mobile_app::view::ui::screens::admin::admin_home_screen.dart::Pages"
+
+class "mobile_app::view::ui::screens::admin::admin_low_stock.dart::LowStockScreen" {
+  +State<LowStockScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mobile_app::view::ui::screens::admin::admin_low_stock.dart::LowStockScreen"
+
+class "mobile_app::view::ui::screens::admin::admin_users_screen.dart::ViewUsersScreen" {
+  +ConsumerState<ViewUsersScreen> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::admin::admin_users_screen.dart::ViewUsersScreen"
+
+class "mobile_app::view::ui::screens::admin::editproduct_screen.dart::EditProductScreen" {
+  +Map<String, dynamic> document
+  +dynamic id
+  +TextEditingController productTitleEditingController
+  +TextEditingController descriptionEditingController
+  +TextEditingController priceEditingController
+  +TextEditingController smallEditingController
+  +TextEditingController mediumEditingController
+  +TextEditingController largeEditingController
+  +TextEditingController xLargeEditingController
+  +TextFormField nameField
+  +TextFormField descriptionField
+  +TextFormField priceField
+  +TextFormField smallStockField
+  +TextFormField mediumStockField
+  +TextFormField largeStockField
+  +TextFormField xLargeStockField
+  +List<bool> isSelected
+  +List<String> selectedSizes
+  +dynamic categoryItem
+  +bool setDefaultCategoryItem
+  +ConsumerState<EditProductScreen> createState()
+}
+
+"mobile_app::view::ui::screens::admin::editproduct_screen.dart::EditProductScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"mobile_app::view::ui::screens::admin::editproduct_screen.dart::EditProductScreen" o-- "flutter::src::material::text_form_field.dart::TextFormField"
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::admin::editproduct_screen.dart::EditProductScreen"
+
+class "mobile_app::view::ui::screens::admin::viewedit_category.dart::CategoriesViewEdit" {
+  +ConsumerState<CategoriesViewEdit> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::admin::viewedit_category.dart::CategoriesViewEdit"
+
+class "mobile_app::view::ui::screens::admin::viewedit_products.dart::ProductsViewEdit" {
+  +ConsumerState<ProductsViewEdit> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::admin::viewedit_products.dart::ProductsViewEdit"
+
+class "mobile_app::view::ui::screens::user::home_screen.dart::HomeScreen" {
+  +Widget build()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerWidget" <|-- "mobile_app::view::ui::screens::user::home_screen.dart::HomeScreen"
+
+class "mobile_app::view::ui::screens::user::log_in_screen.dart::LogInScreen" {
+  +ConsumerState<LogInScreen> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::user::log_in_screen.dart::LogInScreen"
+
+class "mobile_app::view::ui::screens::user::onboarding.dart::OnboardingScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::view::ui::screens::user::onboarding.dart::OnboardingScreen"
+
+class "mobile_app::view::ui::screens::user::product_detail.dart::ProductDetail" {
+  +QueryDocumentSnapshot<Map<String, dynamic>> product
+  +String documentId
+  +ConsumerState<ProductDetail> createState()
+}
+
+"mobile_app::view::ui::screens::user::product_detail.dart::ProductDetail" o-- "cloud_firestore::cloud_firestore.dart::QueryDocumentSnapshot<Map<String, dynamic>>"
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::user::product_detail.dart::ProductDetail"
+
+class "mobile_app::view::ui::screens::user::reset_password.dart::ResetPassword" {
+  +ConsumerState<ResetPassword> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::user::reset_password.dart::ResetPassword"
+
+class "mobile_app::view::ui::screens::user::search_screen.dart::SearchScreen" {
+  +ConsumerState<SearchScreen> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::user::search_screen.dart::SearchScreen"
+
+class "mobile_app::view::ui::screens::user::sign_up_screen.dart::SignUpScreen" {
+  +ConsumerState<SignUpScreen> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::user::sign_up_screen.dart::SignUpScreen"
+
+class "mobile_app::view::ui::screens::user::users_orders_body.dart::UserOrderBody" {
+  +dynamic dropdownValue
+  +ConsumerState<UserOrderBody> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::user::users_orders_body.dart::UserOrderBody"
+
+class "mobile_app::view::ui::screens::user::users_orders_screen.dart::UserOrders" {
+  +ConsumerState<UserOrders> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::user::users_orders_screen.dart::UserOrders"
+
+class "mobile_app::view::ui::screens::user::user_bags_screen.dart::UserBag" {
+  +ConsumerState<UserBag> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::user::user_bags_screen.dart::UserBag"
+
+
+class "mobile_app::view::ui::screens::user::verify_email.dart::VerifyScreen" {
+  +State<VerifyScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mobile_app::view::ui::screens::user::verify_email.dart::VerifyScreen"
+
+class "mobile_app::view::ui::screens::user::wishlist_screen.dart::WishlistScreen" {
+  +ConsumerState<WishlistScreen> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::view::ui::screens::user::wishlist_screen.dart::WishlistScreen"
+
+class "mobile_app::widgets::adminwidgets::admin_body.dart::BodyScreen" {
+  +Pages selectedPage
+  +Pages page
+  +TextStyle textStyle
+  +FirestoreService? firestoreService
+  +Widget build()
+}
+
+"mobile_app::widgets::adminwidgets::admin_body.dart::BodyScreen" o-- "mobile_app::view::ui::screens::admin::admin_home_screen.dart::Pages"
+"mobile_app::widgets::adminwidgets::admin_body.dart::BodyScreen" o-- "flutter::src::painting::text_style.dart::TextStyle"
+"mobile_app::widgets::adminwidgets::admin_body.dart::BodyScreen" o-- "mobile_app::services::firestore_service.dart::FirestoreService"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::adminwidgets::admin_body.dart::BodyScreen"
+
+class "mobile_app::widgets::adminwidgets::admin_grid_view.dart::AdminGridView" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::adminwidgets::admin_grid_view.dart::AdminGridView"
+
+class "mobile_app::widgets::adminwidgets::admin_lowstock_body.dart::LowStockBody" {
+  +dynamic dropdownValue
+  +ConsumerState<LowStockBody> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::widgets::adminwidgets::admin_lowstock_body.dart::LowStockBody"
+
+class "mobile_app::widgets::adminwidgets::admin_orders_body.dart::AdminOrderDisplayBody" {
+  +dynamic dropdownValue
+  +ConsumerState<AdminOrderDisplayBody> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::widgets::adminwidgets::admin_orders_body.dart::AdminOrderDisplayBody"
+
+class "mobile_app::widgets::adminwidgets::dash_card.dart::DashboardCard" {
+  +String title
+  +int number
+  +Icon icon
+  +Color notSelectedColour
+  +Color selectedColour
+  +EdgeInsetsGeometry padding
+  +ConsumerState<DashboardCard> createState()
+}
+
+"mobile_app::widgets::adminwidgets::dash_card.dart::DashboardCard" o-- "flutter::src::widgets::icon.dart::Icon"
+"mobile_app::widgets::adminwidgets::dash_card.dart::DashboardCard" o-- "dart::ui::Color"
+"mobile_app::widgets::adminwidgets::dash_card.dart::DashboardCard" o-- "flutter::src::painting::edge_insets.dart::EdgeInsetsGeometry"
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::widgets::adminwidgets::dash_card.dart::DashboardCard"
+
+
+class "mobile_app::widgets::adminwidgets::manage_tile.dart::ManageTile" {
+  +String title
+  +TextStyle style
+  +Color color
+  +Icon icon
+  +Color tileColor
+  +Widget screen
+  +Widget build()
+}
+
+"mobile_app::widgets::adminwidgets::manage_tile.dart::ManageTile" o-- "flutter::src::painting::text_style.dart::TextStyle"
+"mobile_app::widgets::adminwidgets::manage_tile.dart::ManageTile" o-- "dart::ui::Color"
+"mobile_app::widgets::adminwidgets::manage_tile.dart::ManageTile" o-- "flutter::src::widgets::icon.dart::Icon"
+"mobile_app::widgets::adminwidgets::manage_tile.dart::ManageTile" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::adminwidgets::manage_tile.dart::ManageTile"
+
+class "mobile_app::widgets::homescreencomponents::about_us.dart::AboutUs" {
+  +State<AboutUs> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mobile_app::widgets::homescreencomponents::about_us.dart::AboutUs"
+
+
+class "mobile_app::widgets::homescreencomponents::categories_row.dart::CategoryRow" {
+  +FirestoreService? fireStoreProvider
+  +Widget build()
+}
+
+"mobile_app::widgets::homescreencomponents::categories_row.dart::CategoryRow" o-- "mobile_app::services::firestore_service.dart::FirestoreService"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::homescreencomponents::categories_row.dart::CategoryRow"
+
+class "mobile_app::widgets::homescreencomponents::category_product_display.dart::CategoryProductDisplay" {
+  +QueryDocumentSnapshot<Map<String, dynamic>> categoryDocument
+  +ConsumerState<CategoryProductDisplay> createState()
+}
+
+"mobile_app::widgets::homescreencomponents::category_product_display.dart::CategoryProductDisplay" o-- "cloud_firestore::cloud_firestore.dart::QueryDocumentSnapshot<Map<String, dynamic>>"
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::widgets::homescreencomponents::category_product_display.dart::CategoryProductDisplay"
+
+class "mobile_app::widgets::homescreencomponents::customer_live_chat.dart::CustomerLiveChat" {
+  +State<CustomerLiveChat> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mobile_app::widgets::homescreencomponents::customer_live_chat.dart::CustomerLiveChat"
+
+class "mobile_app::widgets::homescreencomponents::customer_live_chat.dart::_CustomerLiveChatState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "mobile_app::widgets::homescreencomponents::customer_live_chat.dart::_CustomerLiveChatState"
+
+class "mobile_app::widgets::homescreencomponents::customer_service.dart::CustomerServiceScreen" {
+  +State<CustomerServiceScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mobile_app::widgets::homescreencomponents::customer_service.dart::CustomerServiceScreen"
+
+class "mobile_app::widgets::homescreencomponents::drawer_page.dart::DrawerPage" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::homescreencomponents::drawer_page.dart::DrawerPage"
+
+class "mobile_app::widgets::homescreencomponents::home_banner.dart::HomeBanner" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::homescreencomponents::home_banner.dart::HomeBanner"
+
+class "mobile_app::widgets::homescreencomponents::product_display.dart::ProductDisplay" {
+  +FirestoreService? fireStoreProvider
+  +Widget build()
+}
+
+"mobile_app::widgets::homescreencomponents::product_display.dart::ProductDisplay" o-- "mobile_app::services::firestore_service.dart::FirestoreService"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::homescreencomponents::product_display.dart::ProductDisplay"
+
+class "mobile_app::widgets::homescreencomponents::profile_button.dart::ProfileButton" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::homescreencomponents::profile_button.dart::ProfileButton"
+
+class "mobile_app::widgets::homescreencomponents::search_field.dart::SearchField" {
+  +Size screenSize
+  +TextEditingController searchController
+  +Widget build()
+}
+
+"mobile_app::widgets::homescreencomponents::search_field.dart::SearchField" o-- "dart::ui::Size"
+"mobile_app::widgets::homescreencomponents::search_field.dart::SearchField" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::homescreencomponents::search_field.dart::SearchField"
+
+class "mobile_app::widgets::homescreencomponents::user_faq.dart::FaqScreen" {
+  +ConsumerState<FaqScreen> createState()
+}
+
+"flutter_riverpod::src::consumer.dart::ConsumerStatefulWidget" <|-- "mobile_app::widgets::homescreencomponents::user_faq.dart::FaqScreen"
+
+
+class "mobile_app::widgets::onboardwidgets::onboard_widgets.dart::AlreadyHaveAnAccountButton" {
+  +String buttonText
+  +dynamic backgroundColor
+  +dynamic foregroundColor
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::onboardwidgets::onboard_widgets.dart::AlreadyHaveAnAccountButton"
+
+class "mobile_app::widgets::onboardwidgets::onboard_widgets.dart::GetStartedButton" {
+  +String buttonText
+  +dynamic backgroundColor
+  +dynamic foregroundColor
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::onboardwidgets::onboard_widgets.dart::GetStartedButton"
+
+class "mobile_app::widgets::productdisplaywidgets(oncategoryclick)::items_found.dart::ItemsFound" {
+  +FirestoreService? fireStoreProvider
+  +CategoryProductDisplay widget
+  +Widget build()
+}
+
+"mobile_app::widgets::productdisplaywidgets(oncategoryclick)::items_found.dart::ItemsFound" o-- "mobile_app::services::firestore_service.dart::FirestoreService"
+"mobile_app::widgets::productdisplaywidgets(oncategoryclick)::items_found.dart::ItemsFound" o-- "mobile_app::widgets::homescreencomponents::category_product_display.dart::CategoryProductDisplay"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::productdisplaywidgets(oncategoryclick)::items_found.dart::ItemsFound"
+
+class "mobile_app::widgets::productdisplaywidgets(oncategoryclick)::product_display_category.dart::ProductDisplayUnderCategories" {
+  +FirestoreService? fireStoreProvider
+  +CategoryProductDisplay widget
+  +String dropdownValue
+  +Widget build()
+}
+
+"mobile_app::widgets::productdisplaywidgets(oncategoryclick)::product_display_category.dart::ProductDisplayUnderCategories" o-- "mobile_app::services::firestore_service.dart::FirestoreService"
+"mobile_app::widgets::productdisplaywidgets(oncategoryclick)::product_display_category.dart::ProductDisplayUnderCategories" o-- "mobile_app::widgets::homescreencomponents::category_product_display.dart::CategoryProductDisplay" 
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mobile_app::widgets::productdisplaywidgets(oncategoryclick)::product_display_category.dart::ProductDisplayUnderCategories"
+
+
+@enduml

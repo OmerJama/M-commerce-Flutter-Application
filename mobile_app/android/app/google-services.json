@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "347945535740",
+    "project_id": "omers-mobileapp-msc",
+    "storage_bucket": "omers-mobileapp-msc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347945535740:android:9e5827af47916ace272f79",
+        "android_client_info": {
+          "package_name": "com.example.mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347945535740-obk8b9qd283t502acermcg49thoec3ap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6gifVUqXNBjLU_1qwQuO7punAqVBBGiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347945535740-obk8b9qd283t502acermcg49thoec3ap.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
